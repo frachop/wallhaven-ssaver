@@ -53,10 +53,16 @@ namespace wallhaven {
 		_rrs = rrs;
 		CThread::start();
 	}
-	
-	CImageInfo * CUrlProvider::getNextUrl()
+
+	void CUrlProvider::stop( )
 	{
-		CImageInfo * result(nullptr);
+		CThread::abort();
+		_urls.clear();
+	}
+	
+	CImageInfo CUrlProvider::getNextUrl()
+	{
+		CImageInfo result;
 		_mutex.lock();
 		if (!_urls.empty()) {
 			result = _urls.front();
@@ -71,6 +77,8 @@ namespace wallhaven {
 	{
 		CSession session;
 		std::list<std::string> ids;
+		
+		LOGT("{} starts", __PRETTY_FUNCTION__);
 		
 		while (canContinue())
 		{
@@ -99,7 +107,7 @@ namespace wallhaven {
 				const std::string fullUrl = session.getFullImageUrl(i);
 				if (!fullUrl.empty()) {
 					_mutex.lock();
-					_urls.push_back(new CImageInfo( i, fullUrl));
+					_urls.push_back(CImageInfo( i, fullUrl));
 					shuffle( _urls );
 					//NSLog(@"%s - full url (%s) found (%zu urls)", __PRETTY_FUNCTION__, i.c_str(), _fullUrls.size());
 					_mutex.unlock();
@@ -108,6 +116,7 @@ namespace wallhaven {
 			}
 			ms_sleep(500);
 		}
+		LOGT("{} stops", __PRETTY_FUNCTION__);
 	}
 	
 	

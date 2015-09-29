@@ -15,7 +15,7 @@
 
 -(instancetype)init;
 
--(void)start;
+-(void)startWithRndSettings:(const wallhaven::CRandomRequestSettings & )settings;
 -(Image*)getNextImage;
 -(void)stop;
 

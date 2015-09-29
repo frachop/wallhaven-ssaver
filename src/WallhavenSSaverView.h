@@ -7,27 +7,30 @@
 //
 
 #import <ScreenSaver/ScreenSaver.h>
-#import "ConfigurationController.h"
 
-@protocol FraSaverViewDelegate;
+@protocol WallhavenSSaverViewDelegate;
 
 //- /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface FraSaverView : ScreenSaverView
+@interface WallhavenSSaverView : ScreenSaverView
 
-@property (nonatomic, assign) id <FraSaverViewDelegate> delegate;
-@property (nonatomic, strong) ConfigurationController * configController;
+@property (nonatomic, assign) id <WallhavenSSaverViewDelegate> delegate;
+
+// debug purpose only:
+- (NSWindow*)configureSheetFromRig;
 
 @end
 
 //- /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@protocol FraSaverViewDelegate
+@protocol WallhavenSSaverViewDelegate
 
 - (void)setFrameSize:(ScreenSaverView*)sender newSize:(NSSize)newSize;
 - (void)startAnimation:(ScreenSaverView*)sender;
 - (void)stopAnimation:(ScreenSaverView*)sender;
 - (void)drawRect:(ScreenSaverView*)sender rect:(NSRect)rect;
 - (void)animateOneFrame:(ScreenSaverView*)sender;
+
+- (NSWindow*)configureSheet:(ScreenSaverView*)sender fromRig:(BOOL)fromRig;
 
 @end

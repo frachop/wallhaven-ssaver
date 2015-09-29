@@ -7,19 +7,19 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Configuration.h"
 
 @protocol ConfigurationControllerDelegate;
 
 @interface ConfigurationController : NSObject
 
 @property(nonatomic, strong) id<ConfigurationControllerDelegate> delegate;
-
 @property(nonatomic, strong) IBOutlet NSPanel *sheet;
+@property(nonatomic) Configuration *config;
 
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults;
-- (void)synchronize;
+
+- (instancetype)init:(Configuration*)config;
 - (NSWindow *)configureSheet;
-
 
 - (IBAction)dismissConfigSheet:(id)sender;
 

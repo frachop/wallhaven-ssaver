@@ -7,16 +7,52 @@
 //
 
 #import "ConfigurationController.h"
-#import "Configuration.h"
-
 
 static NSString* const kConfigNibName = @"Configuration";
+
+
+//- /////////////////////////////////////////////////////////////////////////////////////////////////////////
+//- return cookie header string
+
+static std::string getPassword( const std::string & userName )
+{
+	const std::string serviceName = "frachop.wallhaven-ssaver";
+	void * readedPassword = nullptr;
+	UInt32 passwordLength = 0;
+
+	OSStatus res = SecKeychainFindGenericPassword(
+		nullptr,
+		static_cast<UInt32>(serviceName.length()),
+		serviceName.c_str(),
+		static_cast<UInt32>(userName.length()),
+		userName.c_str(),
+		
+		&passwordLength,
+		&readedPassword,
+		
+		nullptr );
+
+	if (res) {
+		CFStringRef err = SecCopyErrorMessageString (res, nullptr);
+		CFShow(err);
+	}
+
+	std::string password;
+	if ((res == 0) && (passwordLength > 0))
+		password = (const char*) readedPassword;
+
+	SecKeychainItemFreeContent( nullptr, readedPassword );
+	
+	return password;
+}
+
+
+
 
 //- /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface ConfigurationController()
 
-@property(nonatomic, strong) Configuration *config;
 
 @end
 
@@ -24,27 +60,26 @@ static NSString* const kConfigNibName = @"Configuration";
 
 @implementation ConfigurationController
 
-- (instancetype)initWithUserDefaults:(NSUserDefaults *)userDefaults
+- (instancetype)init:(Configuration*)config
 {
 	self = [super init];
 	if (self) {
-		_config = [[Configuration alloc] initWithUserDefaults:userDefaults];
+		_config = config;
 	}
 	return self;
 }
 
-
-- (void)synchronize
-{
-	[_config synchronize];
+-(void)awakeFromNib {
+	[super awakeFromNib];
 }
 
 - (IBAction)login:(id)sender {
 }
 
 
-- (IBAction)dismissConfigSheet:(id)sender {
-	[self synchronize];
+- (IBAction)dismissConfigSheet:(id)sender
+{
+	[_config synchronize];
 	[_delegate configController:self dismissConfigSheet:_sheet];
 }
 
@@ -59,6 +94,7 @@ static NSString* const kConfigNibName = @"Configuration";
 		}
 	}
 	
+	[_config synchronize];
 	return self.sheet;
 }
 

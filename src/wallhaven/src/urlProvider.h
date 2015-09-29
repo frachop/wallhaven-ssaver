@@ -18,6 +18,7 @@ namespace wallhaven
 		CImageInfo(const std::string & sId, const std::string url);
 		CImageInfo(const CImageInfo& src);
 		CImageInfo & operator=(const CImageInfo& src);
+		bool isValid() const { return !_sId.empty(); }
 
 	public:
 		std::string sId() const { return _sId; }
@@ -36,7 +37,8 @@ namespace wallhaven
 	public:
 		CUrlProvider();
 		void start( const CRandomRequestSettings & rrs );
-		CImageInfo * getNextUrl();
+		CImageInfo getNextUrl();
+		void stop();
 		
 	protected:
 		virtual void run() override;
@@ -45,8 +47,8 @@ namespace wallhaven
 		CRandomRequestSettings _rrs;
 	
 	private:
-		std::mutex             _mutex;
-		std::list<CImageInfo*> _urls;
+		std::mutex            _mutex;
+		std::list<CImageInfo> _urls;
 	};
 
 

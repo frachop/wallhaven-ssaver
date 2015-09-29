@@ -1,11 +1,12 @@
 #include "curl.h"
 #include <iostream>
-
+#include "internals.h"
 
 //- /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 CCurlLibrary::CCurlLibrary()
 {
+	LOGT("{}", __PRETTY_FUNCTION__);
 	CURLcode c = curl_global_init(CURL_GLOBAL_ALL);
 	if (c) {
 		std::cerr << "can't init curl" << std::endl;
@@ -23,6 +24,9 @@ CCurlLibrary::~CCurlLibrary()
 CCurl::CCurl()
 :	_p(nullptr)
 {
+	
+	static CCurlLibrary _curl;
+
 	_p= curl_easy_init();
 }
 

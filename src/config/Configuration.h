@@ -13,6 +13,16 @@
 
 @property wallhaven::CRandomRequestSettings randomRequest;
 
+@property (nonatomic) BOOL categoryGeneral;
+@property (nonatomic) BOOL categoryAnime;
+@property (nonatomic) BOOL categoryPeople;
+
+@property (nonatomic) BOOL puritySFW;
+@property (nonatomic) BOOL puritySketchy;
+@property (nonatomic) BOOL purityNSFW;
+
+@property (nonatomic) BOOL purityNSFW_Enabled;
+
 @property(nonatomic, strong, readonly) NSMutableArray* tags;
 @property(nonatomic, strong, readonly) NSString* userName;
 

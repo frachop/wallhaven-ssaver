@@ -23,28 +23,12 @@
 	{
 		_data= [[NSData alloc] initWithBytes:data length:length];
 		_rep = [[NSBitmapImageRep alloc] initWithData:_data];
-		
-		/*
-		const unsigned long sz = [_rep pixelsWide]*[_rep pixelsHigh]*[_rep samplesPerPixel];
-		NSLog(@" %li x%li bpp(%li) spp(%li) bpr(%li) sz(%lu)"
-		,	(long)[_rep pixelsWide]
-		,	(long)[_rep pixelsHigh]
-		,	(long)[_rep bitsPerPixel]
-		,	(long)[_rep samplesPerPixel]
-		,	(long)[_rep bytesPerRow]
-		,	sz
-		);
-		*/
-		//FILE * f= fopen("/tmp/_1.raw", "wb");
-		//fwrite( [_rep bitmapData], 1, sz, f);
-		//fclose(f);
 	}
 	return self;
 }
 
 -(void)dealloc
 {
-//	NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 -(NSUInteger)getWidth

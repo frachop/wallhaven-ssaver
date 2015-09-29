@@ -39,13 +39,13 @@ namespace wallhaven
 		std::string search() const { return _q; }
 		void set( const std::string & s ) { _q = s; }
 
-		CCategories categories() const { return _c; }
-		void setCategories( const CCategories & c ) { _c = c; }
+		const CCategories & categories() const { return _c; }
+		CCategories & categories() { return _c; }
 		void set( ECategory c, bool bSet=true ) { _c.set(static_cast<int>(c), bSet); }
 		bool get( ECategory c ) { return _c[static_cast<int>(c)]; }
 		
-		CPurities   purities() const { return _p; }
-		void setPurities( const CPurities   & p ) { _p = p; }
+		const CPurities & purities() const { return _p; }
+		CPurities & purities() { return _p; }
 		void set( EPurity   p, bool bSet=true ) { _p.set(static_cast<int>(p), bSet); }
 		bool get( EPurity   p ) { return _p[static_cast<int>(p)]; }
 	
@@ -126,12 +126,18 @@ namespace wallhaven
 	class CImageData
 	{
 	public:
-		CImageData() {}
+		CImageData(const std::string & sId, const std::string & url)
+		:	_sId(sId)
+		,	_url(url)
+		{}
 		
 	public:
 		const std::string & sId() const { return _sId; }
 		const std::string & url() const { return _url; }
+
+	public:
 		const std::vector<uint8_t> & getData() const { return _data; }
+		std::vector<uint8_t> & getData() { return _data; }
 		
 	private:
 		std::string          _sId;
@@ -150,47 +156,6 @@ namespace wallhaven
 		void start( const CRandomRequestSettings & rndAccess );
 		void stop();
 		CImageData* getNextImage();
-
-	private:
-		class CImpl;
-		std::auto_ptr<CImpl> _p;
-	};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//- /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	class CImageDownloader
-	{
-	public:
-		CImageDownloader();
-		~CImageDownloader();
-		
-	public:
-		bool start(const std::string & url);
-		bool getProgress( float & prc );
-		void abort();
-		const std::vector<uint8_t> & getBuffer() const;
 
 	private:
 		class CImpl;

@@ -8,6 +8,7 @@
 
 #pragma once
 #include "../include/wallhaven.h"
+#include "spdlog/spdlog.h"
 
 namespace wallhaven {
 
@@ -35,3 +36,34 @@ namespace wallhaven {
 	}
 
 }
+
+//- LOGS /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace fmt= spdlog::details::fmt;
+std::shared_ptr<spdlog::logger> getLogger();
+
+#define LOGGER getLogger()
+#define LOGT LOGGER->trace
+#define LOGD LOGGER->debug
+#define LOGI LOGGER->info
+#define LOGN LOGGER->notice
+#define LOGW LOGGER->warn
+#define LOGE LOGGER->error
+#define LOGC LOGGER->critical
+#define LOGA LOGGER->alert
+#define LOGM LOGGER->emerg
+
+
+//- /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+inline std::shared_ptr<spdlog::logger> getLogger()
+{
+	std::shared_ptr<spdlog::logger> res = spdlog::get("console");
+	if (res == nullptr) {
+		res= spdlog::stdout_logger_mt("console");
+		res->set_level(spdlog::level::trace);
+	}
+
+	return res;
+}
+

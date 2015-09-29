@@ -8,6 +8,7 @@ OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image dat
 * Choose Purity (SFW/Sketchy)
 * Random 
 * Powerfull c++ api (using [libcurl](http://curl.haxx.se/libcurl/) ) to access wallhaven database 
+* Logging support using excellent [spdlog](https://github.com/gabime/spdlog) library
 
 ##Coming soon
 

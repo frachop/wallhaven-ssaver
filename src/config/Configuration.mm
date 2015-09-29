@@ -22,8 +22,32 @@
 	self = [super init];
 	if (self) {
 		_userDefaults = userDefaults;
+		NSDictionary * d = [_userDefaults valueForKey:@"randomRequest"];
+		
+		for (NSString* key in d) {
+		
+			if ([key compare:@"categories"] == 0) {
+			
+				NSString* c = [d objectForKey:key];
+				_randomRequest.categories() = wallhaven::CCategories( [c UTF8String ] );
+			
+			} else if ([key compare:@"purities"] == 0) {
+			
+			}
+		
+		}
+		
+		if (_randomRequest.categories().none())
+			_randomRequest.categories().set();
+		
+		if (_randomRequest.purities().none())
+			_randomRequest.set(wallhaven::EPurity::SFW);
+		
+		_purityNSFW_Enabled = false;
+		
+		NSLog(@"%@", d);
 
-		if (!_tags)
+	if (!_tags)
 			_tags = [NSMutableArray array];
 		/*
 		[_tags addObject:@"architecture"];
@@ -32,20 +56,34 @@
 		[_tags addObject:@""];
 		*/
 	}
+	
 	return self;
 }
 
-
 - (void)synchronize
 {
-	//_randomRequest.set(wallhaven::EPurity::NSFW, true);
 	NSMutableDictionary * d = [[NSMutableDictionary alloc] init];
 	[d setValue:[NSString stringWithUTF8String:_randomRequest.categories().to_string().c_str()] forKey:@"categories"];
 	[d setValue:[NSString stringWithUTF8String:_randomRequest.purities().to_string().c_str()] forKey:@"purities"];
 	[_userDefaults setValue:d forKey:@"randomRequest"];
+	//NSLog(@"%s - %@", __PRETTY_FUNCTION__, d);
+	
 	[_userDefaults synchronize];
 }
 
+- (BOOL) getCategoryGeneral { return _randomRequest.get(wallhaven::ECategory::General); }
+- (BOOL) getCategoryAnime   { return _randomRequest.get(wallhaven::ECategory::Anime  ); }
+- (BOOL) getCategoryPeople  { return _randomRequest.get(wallhaven::ECategory::People ); }
+- (void) setCategoryGeneral:(BOOL)v { _randomRequest.set(wallhaven::ECategory::General, v); }
+- (void) setCategoryAnime  :(BOOL)v { _randomRequest.set(wallhaven::ECategory::Anime  , v); }
+- (void) setCategoryPeople :(BOOL)v { _randomRequest.set(wallhaven::ECategory::People , v); }
+
+- (BOOL) getPuritySFW     { return _randomRequest.get(wallhaven::EPurity::SFW    ); }
+- (BOOL) getPuritySketchy { return _randomRequest.get(wallhaven::EPurity::Sketchy); }
+- (BOOL) getPurityNSFW    { return _randomRequest.get(wallhaven::EPurity::NSFW   ); }
+- (void) setPuritySFW    :(BOOL)v { _randomRequest.set(wallhaven::EPurity::SFW    , v); }
+- (void) setPuritySketchy:(BOOL)v { _randomRequest.set(wallhaven::EPurity::Sketchy, v); }
+- (void) setPurityNSFW   :(BOOL)v { _randomRequest.set(wallhaven::EPurity::NSFW   , v); }
 
 
 @end

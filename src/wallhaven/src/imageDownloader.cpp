@@ -6,61 +6,25 @@
 //  Copyright © 2015 Frachop. All rights reserved.
 //
 
-#include "../include/wallhaven.h"
-#include "curl.h"
+#include "imageDownloader.h"
 #include <iostream>
 #include <sstream>
 
 namespace wallhaven {
 
-	//- /////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	class CImageDownloader::CImpl
-	:	private CThread
-	{
-	public:
-		CImpl();
-		~CImpl();
-		bool start(const std::string & url);
-		bool getProgress( float & prc );
-		void abort() { CThread::abort(); }
-		const std::vector<uint8_t>& getBuffer() const { return _buffer; }
-		
-	private:
-		static size_t wCallbackEntryPoint(char *ptr, size_t size, size_t nmemb, CImageDownloader::CImpl *me);
-		size_t wCallback(char *ptr, size_t size, size_t nmemb);
-		
-		static int wProgressCallbackEntryPoint(CImageDownloader::CImpl *me,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow);
-		int wProgressCallback(curl_off_t dltotal, curl_off_t dlnow);
-		
-		virtual void run() override;
-		
-	private:
-		CCurl * _curl;
-		
-	private:
-		std::string _url;
-		std::vector<uint8_t> _buffer;
-		std::string           _headerResponse;
-		
-	private:
-		std::atomic_bool       _headerDone;
-		std::atomic<uintmax_t> _fileLength;
-		std::atomic<uintmax_t> _dlLen;
-	};
 	
 	//- /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	CImageDownloader::CImpl::CImpl()
+	CImageDownloader::CImageDownloader()
 	:	_curl(nullptr)
 	{
 	}
 	
-	CImageDownloader::CImpl::~CImpl()
+	CImageDownloader::~CImageDownloader()
 	{
 	}
 	
-	size_t CImageDownloader::CImpl::wCallbackEntryPoint(char *ptr, size_t size, size_t nmemb, CImageDownloader::CImpl * me)
+	size_t CImageDownloader::wCallbackEntryPoint(char *ptr, size_t size, size_t nmemb, CImageDownloader * me)
 	{
 		assert( me );
 		if (size * nmemb)
@@ -94,7 +58,7 @@ namespace wallhaven {
 	}
 	
 	
-	size_t CImageDownloader::CImpl::wCallback(char *ptr, size_t size, size_t nmemb)
+	size_t CImageDownloader::wCallback(char *ptr, size_t size, size_t nmemb)
 	{
 		//std::cout << __PRETTY_FUNCTION__ << std::endl;
 		if (!_headerDone) {
@@ -134,19 +98,19 @@ namespace wallhaven {
 	}
 	
 	
-	int CImageDownloader::CImpl::wProgressCallbackEntryPoint(CImageDownloader::CImpl *me,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow)
+	int CImageDownloader::wProgressCallbackEntryPoint(CImageDownloader *me,   curl_off_t dltotal,   curl_off_t dlnow,   curl_off_t ultotal,   curl_off_t ulnow)
 	{
 		assert( me );
 		return me->wProgressCallback(dltotal, dlnow);
 	}
 	
-	int CImageDownloader::CImpl::wProgressCallback(curl_off_t dltotal, curl_off_t dlnow)
+	int CImageDownloader::wProgressCallback(curl_off_t dltotal, curl_off_t dlnow)
 	{
 		//std::cout << __PRETTY_FUNCTION__ << ": " << dlnow << " / " << dltotal << std::endl;
 		return 0;
 	}
 	
-	void CImageDownloader::CImpl::run()
+	void CImageDownloader::run()
 	{
 		_headerResponse.clear();
 		
@@ -172,9 +136,9 @@ namespace wallhaven {
 		delete _curl; _curl = nullptr;
 	}
 	
-	bool CImageDownloader::CImpl::start(const std::string & url)
+	bool CImageDownloader::start(const std::string & url)
 	{
-		assert(  _curl == nullptr );
+		assert( _curl == nullptr );
 		
 		_url = url;
 		_fileLength = 0;
@@ -185,7 +149,7 @@ namespace wallhaven {
 		return true;
 	}
 	
-	bool CImageDownloader::CImpl::getProgress( float & prc )
+	bool CImageDownloader::getProgress( float & prc )
 	{
 		prc = 0.f ;
 		if ( !_headerDone )
@@ -205,23 +169,5 @@ namespace wallhaven {
 		
 		return res;
 	}
-	
-	//- /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	CImageDownloader::CImageDownloader()
-	:	_p(new CImpl() )
-	{
-	}
-	CImageDownloader::~CImageDownloader()
-	{
-	}
-	
-	bool CImageDownloader::start(const std::string & url) { return _p->start(url); }
-	bool CImageDownloader::getProgress( float & prc ) { return _p->getProgress(prc); }
-	void CImageDownloader::abort() { _p->abort(); }
-	const std::vector<uint8_t> & CImageDownloader::getBuffer() const { return _p->getBuffer(); }
-
-	//- /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 }

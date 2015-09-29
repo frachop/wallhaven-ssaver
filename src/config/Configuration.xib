@@ -33,6 +33,9 @@
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.config.categoryGeneral" id="ePH-fO-fhP"/>
+                                    </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="amk-uu-itf">
                                     <rect key="frame" x="18" y="42" width="61" height="18"/>
@@ -40,6 +43,9 @@
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.config.categoryAnime" id="XkE-uY-ocX"/>
+                                    </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M8e-od-Ltr">
                                     <rect key="frame" x="18" y="22" width="65" height="18"/>
@@ -47,6 +53,9 @@
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.config.categoryPeople" id="7ec-zg-EVc"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </view>
@@ -65,6 +74,9 @@
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.config.puritySFW" id="xoD-EV-Wtt"/>
+                                    </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wt4-81-H2X">
                                     <rect key="frame" x="18" y="42" width="72" height="18"/>
@@ -72,6 +84,9 @@
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.config.puritySketchy" id="WD2-Ca-1h2"/>
+                                    </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uuN-rJ-5x5">
                                     <rect key="frame" x="18" y="22" width="61" height="18"/>
@@ -79,6 +94,10 @@
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="smallSystem"/>
                                     </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.config.purityNSFW" id="lo4-bU-zSf"/>
+                                        <binding destination="-2" name="enabled" keyPath="self.config.purityNSFW_Enabled" id="20e-JO-5Gg"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </view>
@@ -99,5 +118,6 @@
             </view>
             <point key="canvasLocation" x="264" y="122.5"/>
         </window>
+        <userDefaultsController representsSharedInstance="YES" id="DjV-8r-C6R"/>
     </objects>
 </document>
