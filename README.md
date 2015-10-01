@@ -2,6 +2,8 @@
 
 OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image data-base
 
+![image](http://i.imgur.com/neE4o9J.jpg =400x)
+
 ##Features:
 
 * Choose category (General/Anime/People)
@@ -16,3 +18,5 @@ OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image dat
 * include public collections
 * include your private collections
 * tag/multi-tag search
+
+
