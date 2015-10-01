@@ -21,4 +21,4 @@ OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image dat
 
 ##Download
 
-You can download it [here](http://goo.gl/BuIo7m).
+You can download it [here](http://goo.gl/wDtlZ5).
