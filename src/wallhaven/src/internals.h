@@ -61,7 +61,8 @@ inline std::shared_ptr<spdlog::logger> getLogger()
 	std::shared_ptr<spdlog::logger> res = spdlog::get("console");
 	if (res == nullptr) {
 		res= spdlog::stdout_logger_mt("console");
-		res->set_level(spdlog::level::trace);
+		//res->set_level(spdlog::level::trace);
+		res->set_level(spdlog::level::err);
 	}
 
 	return res;

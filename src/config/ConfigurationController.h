@@ -17,7 +17,6 @@
 @property(nonatomic, strong) IBOutlet NSPanel *sheet;
 @property(nonatomic) Configuration *config;
 
-
 - (instancetype)init:(Configuration*)config;
 - (NSWindow *)configureSheet;
 

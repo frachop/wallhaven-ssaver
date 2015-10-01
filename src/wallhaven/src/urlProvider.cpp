@@ -78,19 +78,17 @@ namespace wallhaven {
 		CSession session;
 		std::list<std::string> ids;
 		
+		//_rrs.set("movies");
+		
 		LOGT("{} starts", __PRETTY_FUNCTION__);
 		
 		while (canContinue())
 		{
 			if (ids.size() < 24) {
 				
-				//NSLog(@"%s - (%zu) load new Ids ... ", __PRETTY_FUNCTION__, ids.size());
-				
 				const std::list<std::string> randoms = session.getRandomIds( _rrs );
 				for (const auto i: randoms)
 					ids.push_back(i);
-
-				//NSLog(@"%s - got (%zu) Ids ... ", __PRETTY_FUNCTION__, ids.size());
 			}
 			
 			_mutex.lock();

@@ -2,7 +2,7 @@
 #import "ConfigurationController.h"
 #import "WallhavenSSaverView.h"
 
-@interface AppDelegate () <ConfigurationControllerDelegate>
+@interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
 @property(strong) ConfigurationController *configController;
@@ -18,7 +18,6 @@
 //	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 //	_configController = [[ConfigurationController alloc] initWithUserDefaults:userDefaults];
 //	_configController.delegate = self;
-	
 
 	NSRect bounds = [_window.contentView bounds];
 	fsv = [[WallhavenSSaverView alloc] initWithFrame:bounds isPreview:NO];

@@ -11,7 +11,7 @@
 
 @interface Configuration : NSObject
 
-@property wallhaven::CRandomRequestSettings randomRequest;
+@property (nonatomic) wallhaven::CRandomRequestSettings & randomRequest;
 
 @property (nonatomic) BOOL categoryGeneral;
 @property (nonatomic) BOOL categoryAnime;

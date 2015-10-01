@@ -10,7 +10,6 @@
 
 static NSString* const kConfigNibName = @"Configuration";
 
-
 //- /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //- return cookie header string
 
@@ -53,6 +52,9 @@ static std::string getPassword( const std::string & userName )
 
 @interface ConfigurationController()
 
+@property IBOutlet NSTextField* searchString;
+@property IBOutlet NSTextField* labelVersion;
+
 
 @end
 
@@ -79,6 +81,8 @@ static std::string getPassword( const std::string & userName )
 
 - (IBAction)dismissConfigSheet:(id)sender
 {
+	_config.randomRequest.set( [_searchString.stringValue UTF8String] );
+
 	[_config synchronize];
 	[_delegate configController:self dismissConfigSheet:_sheet];
 }
@@ -92,9 +96,19 @@ static std::string getPassword( const std::string & userName )
 		{
 			NSLog(@"Unable to load configuration sheet");
 		}
+		
+		NSString * name   = [thisBundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+		NSString * version= [thisBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+		
+		
+		//NSLog(@"%@", [thisBundle infoDictionary]);
+		
+		_labelVersion.stringValue = [NSString stringWithFormat:@"%@ v%@", name, version];
 	}
 	
 	[_config synchronize];
+	_searchString.stringValue = [NSString stringWithUTF8String:	_config.randomRequest.search().c_str()];
+	
 	return self.sheet;
 }
 

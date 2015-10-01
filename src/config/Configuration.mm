@@ -33,6 +33,14 @@
 			
 			} else if ([key compare:@"purities"] == 0) {
 			
+				NSString* c = [d objectForKey:key];
+				_randomRequest.purities() = wallhaven::CPurities( [c UTF8String ] );
+				
+			} else if ([key compare:@"search"] == 0) {
+			
+				NSString* c = [d objectForKey:key];
+				_randomRequest.set( [c UTF8String ] );
+				
 			}
 		
 		}
@@ -65,6 +73,7 @@
 	NSMutableDictionary * d = [[NSMutableDictionary alloc] init];
 	[d setValue:[NSString stringWithUTF8String:_randomRequest.categories().to_string().c_str()] forKey:@"categories"];
 	[d setValue:[NSString stringWithUTF8String:_randomRequest.purities().to_string().c_str()] forKey:@"purities"];
+	[d setValue:[NSString stringWithUTF8String:_randomRequest.search().c_str()] forKey:@"search"];
 	[_userDefaults setValue:d forKey:@"randomRequest"];
 	//NSLog(@"%s - %@", __PRETTY_FUNCTION__, d);
 	
