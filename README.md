@@ -15,3 +15,4 @@ OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image dat
 * login to access NSFW images
 * include public collections
 * include your private collections
+* tag/multi-tag search
