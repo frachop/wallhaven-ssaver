@@ -19,4 +19,6 @@ OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image dat
 * include your private collections
 * tag/multi-tag search
 
+##Download
 
+You can download v0.2 [here](http://goo.gl/3GgvgV).
