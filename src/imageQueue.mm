@@ -13,7 +13,7 @@
 
 @implementation ImageQueue
 {
-	wallhaven::CImageProvider         _imgProvider;
+	wallhaven::CImageProvider _imgProvider;
 }
 
 -(instancetype)init

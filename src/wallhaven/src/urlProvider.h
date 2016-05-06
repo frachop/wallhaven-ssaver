@@ -36,6 +36,7 @@ namespace wallhaven
 	{
 	public:
 		CUrlProvider();
+		~CUrlProvider();
 		void start( const CRandomRequestSettings & rrs );
 		CImageInfo getNextUrl();
 		void stop();

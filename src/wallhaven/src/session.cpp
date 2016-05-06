@@ -227,6 +227,7 @@ namespace wallhaven {
 		std::map<std::string, std::string> result;
 		
 		std::string response;
+		_c.setopt(CURLOPT_FOLLOWLOCATION , 1L);
 		_c.setopt(CURLOPT_URL, userUrl(userName) + "/favorites");
 		CURLcode res = _c.perform(response);
 		if (res != CURLE_OK)
@@ -284,6 +285,7 @@ namespace wallhaven {
 		_c.setopt(CURLOPT_VERBOSE, 0L);
 		_c.setopt(CURLOPT_URL, url.c_str());
 		_c.setopt(CURLOPT_HTTPGET , 1L);
+		_c.setopt(CURLOPT_FOLLOWLOCATION , 1L);
 		
 		std::string response;
 		const CURLcode res = _c.perform(response);
@@ -336,6 +338,7 @@ namespace wallhaven {
 		
 		_c.setopt(CURLOPT_URL, getUrl(s));
 		_c.setopt(CURLOPT_HTTPGET , 1L);
+		_c.setopt(CURLOPT_FOLLOWLOCATION , 1L);
 
 		std::string src;
 		const CURLcode res= _c.perform(src);
@@ -368,6 +371,7 @@ namespace wallhaven {
 		_c.setopt(CURLOPT_VERBOSE, 0L);
 		_c.setopt(CURLOPT_URL, ( WH_HTTP_WALL "/" + imageId).c_str());
 		_c.setopt(CURLOPT_HTTPGET , 1L);
+		_c.setopt(CURLOPT_FOLLOWLOCATION , 1L);
 		const CURLcode res= _c.perform(src);
 		if (res != CURLE_OK)
 			return "";

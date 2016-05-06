@@ -22,6 +22,7 @@ namespace wallhaven {
 	
 	CImageDownloader::~CImageDownloader()
 	{
+		abort();
 	}
 	
 	size_t CImageDownloader::wCallbackEntryPoint(char *ptr, size_t size, size_t nmemb, CImageDownloader * me)
@@ -116,6 +117,8 @@ namespace wallhaven {
 		
 		_curl = new CCurl( );
 		_curl->setopt(CURLOPT_URL, _url.c_str());
+		_curl->setopt(CURLOPT_FOLLOWLOCATION , 1L);
+		_curl->setopt(CURLOPT_VERBOSE , 0L);
 		//setopt(CURLOPT_USERAGENT, "frasaver-agent/1.0");
 		
 		_curl->setopt(CURLOPT_HEADER, 0L);

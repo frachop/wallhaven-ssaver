@@ -47,6 +47,11 @@ namespace wallhaven {
 	{
 	}
 	
+	CUrlProvider::~CUrlProvider()
+	{
+		abort();
+	}
+	
 	void CUrlProvider::start( const CRandomRequestSettings & rrs )
 	{
 		abort();
