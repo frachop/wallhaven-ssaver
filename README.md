@@ -1,5 +1,7 @@
 # wallhaven-ssaver
 
+[![GuardRails badge](https://badges.production.guardrails.io/frachop/wallhaven-ssaver.svg)](https://www.guardrails.io)
+
 OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image data-base
 
 ![image](http://i.imgur.com/neE4o9J.jpg =400x)
