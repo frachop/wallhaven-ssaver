@@ -52,12 +52,10 @@ std::string CCurl::escapeString( const std::string & src) const
 size_t CCurl::wfString(void *ptr, size_t size, size_t nmemb, std::string * s)
 {
 	std::vector<char> v;
-	v.reserve(1 + size*nmemb);
-	for (size_t i=0; i<size*nmemb; ++i)
-		v.push_back(((char*)ptr)[i]);
+	v.resize(1 + size*nmemb);
+	memcpy( v.data(), ptr, size*nmemb);
 	v.push_back('\0');
 	(*s) += v.data();
-	
 	return size*nmemb;
 }
 

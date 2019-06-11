@@ -12,11 +12,11 @@
 #include <random>
 #include <sstream>
 
-#define WH_HTTP_ROOT "http://alpha.wallhaven.cc"
+#define WH_HTTP_ROOT "https://wallhaven.cc"
 #define WH_HTTP_LOGIN WH_HTTP_ROOT "/auth/login"
-#define WH_HTTP_WALL WH_HTTP_ROOT "/wallpaper"
+#define WH_HTTP_WALL WH_HTTP_ROOT "/w"
 #define WH_HTTP_SEARCH WH_HTTP_ROOT "/search"
-#define WH_HTTP_USER "http://alpha.wallhaven.cc/user"
+#define WH_HTTP_USER "https://wallhaven.cc/user"
 
 enum
 {
@@ -281,6 +281,8 @@ namespace wallhaven {
 
 	std::list<std::string> CSession::CImpl::getRandomIds( const std::string & url)
 	{
+		LOGT("{} from {}", __PRETTY_FUNCTION__, url);
+		
 		std::list<std::string> result;
 		_c.setopt(CURLOPT_VERBOSE, 0L);
 		_c.setopt(CURLOPT_URL, url.c_str());
@@ -380,14 +382,14 @@ namespace wallhaven {
 			return "";
 
 		const std::string expression = strGetTrim( R"exp(
-			"(//wallpapers.wallhaven.cc/wallpapers/full/wallhaven-[^\"]+)"
+			<img[\s]+id="wallpaper"[\s]+src="(.*\.jpg)"
 		)exp" );
 		
 		const std::string url= regexOneFirstGroup(expression, src);
 		if (url.empty())
 			return "";
 
-		return "http:" + url;
+		return url;
 	}
 	
 	//- /////////////////////////////////////////////////////////////////////////////////////////////////////////

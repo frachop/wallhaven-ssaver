@@ -105,7 +105,6 @@ namespace wallhaven {
 				std::string i = ids.front();
 				ids.pop_front();
 				
-				
 				//NSLog(@"%s - looking for full url of (%s)", __PRETTY_FUNCTION__, i.c_str());
 				const std::string fullUrl = session.getFullImageUrl(i);
 				if (!fullUrl.empty()) {
