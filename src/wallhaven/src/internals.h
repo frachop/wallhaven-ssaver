@@ -9,6 +9,7 @@
 #pragma once
 #include "../include/wallhaven.h"
 #include "spdlog/spdlog.h"
+#include "json/json.hpp"
 
 namespace wallhaven {
 

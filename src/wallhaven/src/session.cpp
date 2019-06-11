@@ -14,8 +14,8 @@
 
 #define WH_HTTP_ROOT "https://wallhaven.cc"
 #define WH_HTTP_LOGIN WH_HTTP_ROOT "/auth/login"
-#define WH_HTTP_WALL WH_HTTP_ROOT "/w"
-#define WH_HTTP_SEARCH WH_HTTP_ROOT "/search"
+#define WH_HTTP_WALL "https://wallhaven.cc/api/v1/w"
+#define WH_HTTP_SEARCH "https://wallhaven.cc/api/v1/search"
 #define WH_HTTP_USER "https://wallhaven.cc/user"
 
 enum
@@ -271,12 +271,25 @@ namespace wallhaven {
 	
 	static void parseIds( std::list<std::string> & ids, const std::string & src)
 	{
+		try {
+			const auto jResult = nlohmann::json::parse(src);
+			for (auto const & i : jResult["data"])
+			{
+				ids.push_back(i["id"].get<std::string>());
+			}
+			
+		} catch(...)
+		{
+		}
+/*
+	
 		const std::string expression = strGetTrim( R"exp(
 			data-wallpaper-id[\s]*=[\s]*"([^\"]+)"
 		)exp" );
 		
 		for (auto i : regexAllFirstGroups(expression, src))
 			ids.push_back(i);
+*/
 	}
 
 	std::list<std::string> CSession::CImpl::getRandomIds( const std::string & url)
@@ -317,7 +330,7 @@ namespace wallhaven {
 		params.push_back("sorting=random");
 		params.push_back("order=desc");
 
-		std::string url = WH_HTTP_SEARCH + std::string("?");
+		std::string url = WH_HTTP_SEARCH "?";
 		for (std::size_t i = 0; i< params.size(); ++i)
 		{
 			url += params[i];
@@ -381,6 +394,16 @@ namespace wallhaven {
 		if (_c.getHttpResponseCode() != HTTP_OK)
 			return "";
 
+		try {
+			const auto jResult = nlohmann::json::parse(src);
+			return jResult["data"]["path"];
+		} catch(...)
+		{
+		}
+		return "";
+/*
+
+
 		const std::string expression = strGetTrim( R"exp(
 			<img[\s]+id="wallpaper"[\s]+src="(.*\.jpg)"
 		)exp" );
@@ -390,6 +413,7 @@ namespace wallhaven {
 			return "";
 
 		return url;
+*/
 	}
 	
 	//- /////////////////////////////////////////////////////////////////////////////////////////////////////////
