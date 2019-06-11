@@ -13,6 +13,7 @@ OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image dat
 * Random 
 * Powerfull c++ api (using [libcurl](http://curl.haxx.se/libcurl/) ) to access wallhaven database 
 * Logging support using excellent [spdlog](https://github.com/gabime/spdlog) library
+* Json parsing using powerfull [JSON for Modern C++](https://github.com/nlohmann/json) library
 
 ##Coming soon
 
@@ -23,4 +24,4 @@ OSX screen saver using fantastic [wallhaven](http://beta.wallhaven.cc) image dat
 
 ##Download
 
-You can download it [here](http://goo.gl/wDtlZ5).
+You can download it [here](https://github.com/frachop/wallhaven-ssaver/releases).
